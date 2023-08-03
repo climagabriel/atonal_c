@@ -5,6 +5,8 @@
 // original inspiration: http://www.azillionmonkeys.com/qed/sqroot.html
 // you do have to link it against the math library
 // gcc babylonian-method-convergence.c -o binbabylonian-method-convergence -lm && ./binbabylonian-method-convergence
+//
+// TODO: step until you reach the long precision limit
 
 int main() {
 
