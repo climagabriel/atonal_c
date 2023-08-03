@@ -6,7 +6,7 @@
 // you do have to link it against the math library
 // gcc babylonian-method-convergence.c -o binbabylonian-method-convergence -lm && ./binbabylonian-method-convergence
 //
-// TODO: step until you reach the long precision limit
+// TODO: step until you reach the float precision limit
 
 int main() {
 
