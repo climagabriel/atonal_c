@@ -19,6 +19,6 @@ int main() {
 
 	for (int i = 0; i < size; i++) {
 		printf("%u", random64bit & mask ? 1 : 0);
-		random64bit = random64bit << 1;
+		mask = mask >> 1;
 	}
 }
