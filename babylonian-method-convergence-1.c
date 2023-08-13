@@ -25,7 +25,7 @@ int main() {
 	float error = (estimate * estimate) - radicand;
 
 	for (; error > epsi; step++) {
-		estimate = (estimate + radicand/estimate) / 2;
+		estimate = (estimate + radicand/estimate) / 2; // next est is the avg of current est and radicand/est
 		error = (estimate * estimate) - radicand;
 		printf("%f ", error);
 	}

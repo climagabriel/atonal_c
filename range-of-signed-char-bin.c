@@ -3,7 +3,7 @@
 int main() {
 
 	signed char c = 0x00;
-	for (int i = 0; i < 257; i++) {
+	for (int i = 0; i <= 256; i++) {
 
 		char mask = 1;
 		printf("%d ", c);
@@ -15,4 +15,3 @@ int main() {
 		c++;
 	}
 }
-
