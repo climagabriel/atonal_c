@@ -1,0 +1,35 @@
+#!/usr/bin/env bpftrace
+
+
+tracepoint:syscalls:sys_enter_openat*
+{
+// TODO: pass partial string name as argument instead of fucking grepping
+//  $filename = str(args->filename);
+//  $string = str($1);
+//  if ( strncmp($filename, $string, 3) ) {
+    @filename[tid] = args->filename;
+    @flags[tid] = args->flags;
+    @start[tid] = nsecs;
+    @dfd[tid] = args->dfd;
+//  }
+}
+
+tracepoint:syscalls:sys_exit_openat* /@filename[tid]/
+{
+	$ret = args->ret;
+	$fd = $ret >= 0 ? $ret : -1;
+	$errno = $ret >= 0 ? 0 : - $ret;
+  $usecs = (nsecs - @start[tid]) / 1000;
+// AT_FDCWD = -100 dfd, i.e. in current working directory of the calling process
+//	printf("%d usec %s:%d:%d fd:%d dfd:%d err:%d flags:%d %s %s\n",
+//    $usecs, comm, pid, tid, $fd, @dfd[tid], $errno, @flags[tid], str(@filename[tid]), strftime("%H:%M:%S:%f",nsecs));
+// just a different format, and actually prints the latency
+
+	printf("%s:%d:%d %s fd:%d dfd:%d err:%d flags:%d %s\n",
+         comm, pid, tid, str(@filename[tid]), $fd, @dfd[tid], $errno, @flags[tid], strftime("%H:%M:%S:%f",nsecs));
+  delete(@filename[tid]);
+  delete(@start[tid]);
+  delete(@flags[tid]);
+  delete(@dfd[tid]);
+}
+
